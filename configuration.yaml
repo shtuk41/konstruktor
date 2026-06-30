@@ -1,0 +1,31 @@
+  camera:
+    type: camera
+    name: camera1
+
+  configuration:
+    libraryPath:  "C:\\Files\\NlxStage\\MOST RECENT CAD\\glb"
+    node0:
+      name: "A0 Main granite"
+      path: "A0 Main granite.glb"
+      joint: 
+        type: prismatic
+        axis: [0,1,0]
+      children:
+        node1:
+          name: "A1 Wafer Theta"
+          path: "A1 Wafer Theta.glb"
+          joint:
+            type: revolute
+            axis: [0,1,0]
+        node2:
+          name: "A1 Wafer Theta"
+          path: "A1 Wafer Theta.glb"
+          join:
+            type: revolute
+            axis: [0,1,0]
+          children:
+            
+          
+
+        
+
