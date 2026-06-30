@@ -70,11 +70,13 @@ target_link_libraries(KonstruktorLib PRIVATE
 		GLEW::GLEW
 		freetype
 		opengl32
-        yaml-cpp::yaml-cpp)
+        yaml-cpp::yaml-cpp
+		tinygltf)
 
 target_link_libraries(Konstruktor PRIVATE 
 		KonstruktorLib
-        GLEW::GLEW)
+        GLEW::GLEW
+		tinygltf)
 
 # get_target_property(CURRENT_INCLUDES Konstruktor INCLUDE_DIRECTORIES)
 # message(STATUS "Konstruktor target includes: ${CURRENT_INCLUDES}")

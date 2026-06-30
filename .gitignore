@@ -70,4 +70,5 @@ Testing/
 
 build/
 ThirdParty/imgui/
+ThirdParty/tinygltf/
 
