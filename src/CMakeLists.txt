@@ -1,6 +1,8 @@
 
 file(GLOB_RECURSE MY_HEADERS "${CMAKE_SOURCE_DIR}/include/*.h")
 
+file(GLOB_RECURSE MY_SHADERS "${CMAKE_SOURCE_DIR}/shaders/*.vert" "${CMAKE_SOURCE_DIR}/shaders/*.frag")
+
 set(CONFIG_FILES 
 	"${CMAKE_SOURCE_DIR}/configuration.yaml" 
 	"${CMAKE_SOURCE_DIR}/options.xml")
@@ -24,6 +26,7 @@ source_group("Source Files\\imgui" FILES ${IMGUI_SOURCES})
 source_group("Header Files\\imgui" FILES ${IMGUI_HEADERS})
 source_group("Header Files" FILES ${MY_HEADERS})
 source_group("Config Files" FILES ${CONFIG_FILES})
+source_group("Shaders" FILES ${MY_SHADERS})
 
 add_library(KonstruktorLib STATIC 
     shaders.cpp 
@@ -45,6 +48,7 @@ target_sources(KonstruktorLib PRIVATE
 target_sources(Konstruktor PRIVATE 
     ${IMGUI_HEADERS}
     ${MY_HEADERS}
+    ${MY_SHADERS}
 )
 
 # Headers
@@ -89,6 +93,10 @@ add_custom_command(TARGET Konstruktor POST_BUILD
     # Copy configuration.yaml to both locations
     COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_SOURCE_DIR}/configuration.yaml" "${CMAKE_SOURCE_DIR}/build/src/configuration.yaml"
     COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_SOURCE_DIR}/configuration.yaml" "${CMAKE_SOURCE_DIR}/build/bin/configuration.yaml"
+
+    # Copy shaders directory to both locations
+    COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/shaders" "${CMAKE_BINARY_DIR}/src/shaders"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/shaders" "${CMAKE_BINARY_DIR}/bin/shaders"
 )
 
 set_target_properties(Konstruktor PROPERTIES

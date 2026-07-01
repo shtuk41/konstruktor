@@ -28,7 +28,7 @@ float rotateX = -0.145f;
 int window_width = options_reader::OptionsReader::GetApplicationWindowOptions()->GetWidth();
 int window_height = options_reader::OptionsReader::GetApplicationWindowOptions()->GetHeight();
 
-//#define ENABLE_DEBUG_WINDOW_OUTPUT
+#define ENABLE_DEBUG_WINDOW_OUTPUT
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -213,7 +213,7 @@ int main()
 	GLuint matrix_id = glGetUniformLocation(program_id, "MVP");
 
 	//setup graph objects
-	Axes3d axes3d(1.0f, 1.0f, 1.0f);
+	Axes3d axes3d(10.0f, 10.0f, 10.0f);
 	axes3d.Setup(program_id);
 
 	IMGUI_CHECKVERSION();
