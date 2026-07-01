@@ -32,6 +32,7 @@ add_library(KonstruktorLib STATIC
     shaders.cpp 
     texture.cpp 
     optionsreader.cpp
+	stl_parser.cpp
 )
 
 add_executable(Konstruktor 
