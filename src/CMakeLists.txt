@@ -1,7 +1,20 @@
 
-file(GLOB_RECURSE MY_HEADERS "${CMAKE_SOURCE_DIR}/include/*.h")
-
+file(GLOB_RECURSE MY_CADRW_SOURCES "${CMAKE_SOURCE_DIR}/src/cadrw/*.cpp")
 file(GLOB_RECURSE MY_SHADERS "${CMAKE_SOURCE_DIR}/shaders/*.vert" "${CMAKE_SOURCE_DIR}/shaders/*.frag")
+
+
+set(MY_HEADERS
+	"${CMAKE_SOURCE_DIR}/include/axes3d.h" 
+	"${CMAKE_SOURCE_DIR}/include/camera.h"
+	"${CMAKE_SOURCE_DIR}/include/exceptions.h"
+	"${CMAKE_SOURCE_DIR}/include/joints.h"
+	"${CMAKE_SOURCE_DIR}/include/optionsreader.h"
+	"${CMAKE_SOURCE_DIR}/include/render_object.h"
+	"${CMAKE_SOURCE_DIR}/include/shaders.h"
+	"${CMAKE_SOURCE_DIR}/include/texture.h"
+	"${CMAKE_SOURCE_DIR}/include/window.h"
+
+)
 
 set(CONFIG_FILES 
 	"${CMAKE_SOURCE_DIR}/configuration.yaml" 
@@ -22,17 +35,25 @@ set(IMGUI_HEADERS
     ../ThirdParty/imgui/imconfig.h
 )
 
+set(CADRW_HEADERS
+    "${CMAKE_SOURCE_DIR}/include/cadrw/cad_common.h"
+    "${CMAKE_SOURCE_DIR}/include/cadrw/cad_parser.h"
+	"${CMAKE_SOURCE_DIR}/include/cadrw/stl_parser.h"
+)
+
 source_group("Source Files\\imgui" FILES ${IMGUI_SOURCES})
 source_group("Header Files\\imgui" FILES ${IMGUI_HEADERS})
 source_group("Header Files" FILES ${MY_HEADERS})
 source_group("Config Files" FILES ${CONFIG_FILES})
 source_group("Shaders" FILES ${MY_SHADERS})
+source_group("Header Files\\cadrw" FILES ${CADRW_HEADERS})
+source_group("Source Files\\cadrw" FILES ${MY_CADRW_SOURCES})
 
 add_library(KonstruktorLib STATIC 
     shaders.cpp 
     texture.cpp 
     optionsreader.cpp
-	stl_parser.cpp
+	${MY_CADRW_SOURCES}
 )
 
 add_executable(Konstruktor 
@@ -43,6 +64,7 @@ target_sources(KonstruktorLib PRIVATE
 	${IMGUI_SOURCES} 
     ${IMGUI_HEADERS}
     ${MY_HEADERS}
+	${CADRW_HEADERS}
 	${CONFIG_FILES}
 )
 
@@ -56,6 +78,7 @@ target_sources(Konstruktor PRIVATE
 target_include_directories(KonstruktorLib PRIVATE 
 
 	"${CMAKE_SOURCE_DIR}/include"
+	"${CMAKE_SOURCE_DIR}/include/cadrw"
     ../ThirdParty/imgui
     ../ThirdParty/imgui/backends
 )
