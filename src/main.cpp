@@ -21,12 +21,14 @@
 #include <freetype/freetype.h>
 #include <window.h>
 #include <optionsreader.h>
+#include <kinematictree.h>
 
 float rotateY = 0.025f;
 float rotateX = -0.145f;
 
 int window_width = options_reader::OptionsReader::GetApplicationWindowOptions()->GetWidth();
 int window_height = options_reader::OptionsReader::GetApplicationWindowOptions()->GetHeight();
+fs::path configurationFilePath = options_reader::OptionsReader::GetConfigurationFileOptions()->GetPath();
 
 #define ENABLE_DEBUG_WINDOW_OUTPUT
 
@@ -182,6 +184,13 @@ void mouse_instersections(Camera & cam)
 
 int main()
 {
+	if (!fs::exists(configurationFilePath))
+	{
+		std::cout << "configuration file doesn't exist\n";
+		return 0;
+
+	}
+
 	glfwSetErrorCallback(glfw_error_callback);
 
 	if (!glfwInit())
@@ -192,6 +201,16 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
 	Window window(window_width, window_height, key_callback, mouse_callback, mouse_button_callback, scroll_callback);
+
+	std::cout << configurationFilePath << std::endl;
+
+
+
+
+
+	//KinematicTree kinematicTree()
+
+
 
 	glfwSwapInterval(1); // Enable vsync
 

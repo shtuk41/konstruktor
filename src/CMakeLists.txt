@@ -13,7 +13,7 @@ set(MY_HEADERS
 	"${CMAKE_SOURCE_DIR}/include/shaders.h"
 	"${CMAKE_SOURCE_DIR}/include/texture.h"
 	"${CMAKE_SOURCE_DIR}/include/window.h"
-
+    "${CMAKE_SOURCE_DIR}/include/kinematictree.h"
 )
 
 set(CONFIG_FILES 
@@ -53,6 +53,7 @@ add_library(KonstruktorLib STATIC
     shaders.cpp 
     texture.cpp 
     optionsreader.cpp
+    kinematictree.cpp
 	${MY_CADRW_SOURCES}
 )
 
@@ -128,6 +129,15 @@ set_target_properties(Konstruktor PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}/build/bin"
     RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}/build/bin"
 	CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+)
+
+set_target_properties(KonstruktorLib PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/bin"
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}/build/bin"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}/build/bin"
+    CXX_STANDARD 20
     CXX_STANDARD_REQUIRED ON
     CXX_EXTENSIONS OFF
 )

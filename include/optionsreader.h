@@ -1,15 +1,17 @@
 #ifndef _OPTIONSREADER_H
 #define _OPTIONSREADER_H
 
+#include <filesystem>
+#include <memory>
 #include <string>
-#include <map>
+
+namespace fs = std::filesystem;
 
 namespace options_reader
 {
 	class ApplicationWindow
 	{
 	public:
-
 		ApplicationWindow():x(0), y(0), width(1920), height(1080) {}
 		ApplicationWindow(int x_in, int y_in, int width_in, int height_in) : x(x_in), y(y_in), width(width_in), height(height_in) {}
 		int GetX() const {return x;}
@@ -23,46 +25,45 @@ namespace options_reader
 		int height;
 	};
 
-	struct FovsGeometry
+	class ConfigurationFile
 	{
 	public:
-		FovsGeometry(std::string file) : fileName(file) {}
-		std::string GetFileName() const { return fileName;};
-	private:
-		std::string		fileName;
-	};
+		explicit ConfigurationFile(const fs::path &filePath) : filePath(filePath) {}
+		fs::path GetPath() const { return filePath; }
 
-	struct Segments
-	{
-	public:
-		Segments(std::string file) : fileName(file) {}
-		std::string GetFileName() const { return fileName;}
 	private:
-		std::string		fileName;
-	};
-
-	class Acquired
-	{
-	public:
-		Acquired(std::string path): path(path) { }
-		std::string GetPath() const { return path; }
-	private:
-		std::string		path;
+		fs::path filePath;
 	};
 
 	class OptionsReader
 	{
 	public:
-		static OptionsReader* Instance() { if (optionsReader) return optionsReader; else return optionsReader =  new OptionsReader();}
-		~OptionsReader();
+		OptionsReader(const OptionsReader&) = delete;
+		OptionsReader& operator=(const OptionsReader&) = delete;
 
-		static const ApplicationWindow* GetApplicationWindowOptions() { return Instance()->applicationWindow;}
+		static OptionsReader& Instance() 
+		{ 
+			static OptionsReader instance;
+			return instance;
+		}
+		
+		static const ApplicationWindow* GetApplicationWindowOptions() 
+		{ 
+			return Instance().applicationWindow.get();
+		}
+
+		static const ConfigurationFile* GetConfigurationFileOptions()
+		{
+			return Instance().configurationFile.get();
+		}
+
 	private:
-		OptionsReader();
-		void Init();
-		static OptionsReader *optionsReader;
+		OptionsReader() { Init(); }
+		~OptionsReader() = default;
 
-		ApplicationWindow *applicationWindow;
+		void Init();
+		std::unique_ptr<ApplicationWindow> applicationWindow;
+		std::unique_ptr<ConfigurationFile> configurationFile;
 	};
 
 }

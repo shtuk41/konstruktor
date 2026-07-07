@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <application>
   <windows x="0" y="0" width="1920" height="1080"/>
+  <configurationFile path="configuration.yaml"/>
 </application>  
